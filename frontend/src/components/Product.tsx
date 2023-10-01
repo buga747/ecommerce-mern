@@ -1,5 +1,5 @@
 import { Card } from 'react-bootstrap';
-
+import { Link } from 'react-router-dom';
 interface IProduct {
   _id: string;
   name: string;
@@ -15,17 +15,17 @@ interface IProduct {
 
 const Product: React.FC<{ product: IProduct }> = ({ product }) => {
   return (
-    <Card className="my-3 py-3">
-      <a href={`/product/${product._id}`}>
+    <Card className="my-3 py-3 rounded">
+      <Link to={`/product/${product._id}`}>
         <Card.Img src={product.image} variant="top" />
-      </a>
+      </Link>
 
       <Card.Body>
-        <a href={`/product/${product._id}`}>
-          <Card.Title as="div">
+        <Link to={`/product/${product._id}`}>
+          <Card.Title as="div" className="product-title">
             <strong>{product.name}</strong>
           </Card.Title>
-        </a>
+        </Link>
         <Card.Text as="h3">${product.price}</Card.Text>
       </Card.Body>
     </Card>
