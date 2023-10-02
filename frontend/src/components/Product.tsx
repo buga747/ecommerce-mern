@@ -1,5 +1,6 @@
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import Rating from './Rating';
 interface IProduct {
   _id: string;
   name: string;
@@ -26,6 +27,14 @@ const Product: React.FC<{ product: IProduct }> = ({ product }) => {
             <strong>{product.name}</strong>
           </Card.Title>
         </Link>
+
+        <Card.Text as="div">
+          <Rating
+            value={product.rating}
+            text={`${product.numReviews} reviews`}
+          />
+        </Card.Text>
+
         <Card.Text as="h3">${product.price}</Card.Text>
       </Card.Body>
     </Card>
