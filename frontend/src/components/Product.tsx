@@ -1,18 +1,7 @@
 import { Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Rating from './Rating';
-interface IProduct {
-  _id: string;
-  name: string;
-  image: string;
-  description: string;
-  brand: string;
-  category: string;
-  price: number;
-  countInStock: number;
-  rating: number;
-  numReviews: number;
-}
+import { IProduct } from '../types/productTypes';
 
 const Product: React.FC<{ product: IProduct }> = ({ product }) => {
   return (

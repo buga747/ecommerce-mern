@@ -1,19 +1,7 @@
 import { Row, Col } from 'react-bootstrap';
 import products from '../products';
 import Product from '../components/Product';
-
-interface IProduct {
-  _id: string;
-  name: string;
-  image: string;
-  description: string;
-  brand: string;
-  category: string;
-  price: number;
-  countInStock: number;
-  rating: number;
-  numReviews: number;
-}
+import { IProduct } from '../types/productTypes';
 
 const HomeScreen: React.FC = () => {
   return (

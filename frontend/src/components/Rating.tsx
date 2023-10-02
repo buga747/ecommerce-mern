@@ -1,11 +1,7 @@
 import { FaStar, FaStarHalfAlt, FaRegStar } from 'react-icons/fa';
+import { IRating } from '../types/productTypes';
 
-interface IProps {
-  value: number;
-  text?: string;
-}
-
-const Rating: React.FC<IProps> = ({ value, text }) => {
+const Rating: React.FC<IRating> = ({ value, text }) => {
   return (
     <div className="rating">
       <span>
