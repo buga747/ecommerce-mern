@@ -1,17 +1,31 @@
 import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+
 import { Link } from 'react-router-dom';
 import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap';
-import products from '../products';
 import { IProduct } from '../types/productTypes';
 import Rating from '../components/Rating';
+import axios from 'axios';
 
 const ProductScreen: React.FC = () => {
+  const [product, setProduct] = useState<IProduct | null>(null);
+
   const { id: productId } = useParams();
 
-  const product = products.find(
-    (product: IProduct) => product._id === productId
-  );
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const { data } = await axios.get(
+          `http://localhost:5000/api/products/${productId}`
+        );
+        setProduct(data);
+      } catch (error) {
+        console.error('Error fetching product:', error);
+      }
+    };
 
+    fetchProduct();
+  }, [productId]);
   return (
     <>
       <Link className="btn btn-light my-3" to="/">

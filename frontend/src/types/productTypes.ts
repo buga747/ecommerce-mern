@@ -12,6 +12,6 @@ export interface IProduct {
 }
 
 export interface IRating {
-  value: number | undefined;
+  value: number | null | undefined;
   text?: string;
 }
