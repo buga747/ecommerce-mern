@@ -3,20 +3,27 @@ import Product from '../components/Product';
 import { IProduct } from '../types/productTypes';
 import { useGetProductsQuery } from '../redux/slices/productsApiSlice';
 import { useEffect } from 'react';
+import Loader from '../components/Loader';
+import Message from '../components/Message';
 
 const HomeScreen: React.FC = () => {
-  const { data: products, isLoading, isError } = useGetProductsQuery();
+  const { data: products, isLoading, error } = useGetProductsQuery();
   useEffect(() => {
-    console.log(isError);
+    console.log(error);
   });
 
   return (
     <>
-      {isLoading && <h2>Loading...</h2>}
+      {isLoading && <Loader />}
 
-      {isError && <div>Error</div>}
+      {error && (
+        <Message variant="danger">
+          <h2>{error?.name}</h2>
+          <h3> {error?.message}</h3>
+        </Message>
+      )}
 
-      {!isError && !isLoading && (
+      {!error && !isLoading && (
         <>
           <h1>Latest products</h1>
           <Row>
