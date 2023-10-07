@@ -9,9 +9,12 @@ import {
   REHYDRATE,
 } from 'redux-persist';
 import { apiSlice } from './slices/apiSLice';
+import cartSliceReducer from './slices/cartSlice';
+
 export const store = configureStore({
   reducer: {
     [apiSlice.reducerPath]: apiSlice.reducer,
+    cart: cartSliceReducer,
   },
   middleware(getDefaultMiddleware) {
     return getDefaultMiddleware({
