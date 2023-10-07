@@ -2,15 +2,11 @@ import { Row, Col } from 'react-bootstrap';
 import Product from '../components/Product';
 import { IProduct } from '../types/productTypes';
 import { useGetProductsQuery } from '../redux/slices/productsApiSlice';
-import { useEffect } from 'react';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 
 const HomeScreen: React.FC = () => {
   const { data: products, isLoading, error } = useGetProductsQuery();
-  useEffect(() => {
-    console.log(error);
-  });
 
   return (
     <>
