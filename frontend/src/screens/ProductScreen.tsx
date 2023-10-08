@@ -18,14 +18,16 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
+import { ICartProduct } from '../types/productTypes';
+import { RootState } from '../redux/store';
 
 const ProductScreen: React.FC = () => {
   const { id: productId } = useParams();
-  const cartItems = useSelector(state => state.cart.cartItems);
+  const cartItems = useSelector((state: RootState) => state.cart.cartItems);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [qty, setQty] = useState(1);
+  const [qty, setQty] = useState<number>(1);
 
   const {
     data: product,
@@ -34,7 +36,9 @@ const ProductScreen: React.FC = () => {
   } = useGetProductDetailsQuery(productId);
 
   const addToCartHandler = () => {
-    const existingCartItem = cartItems.find(item => item._id === product._id);
+    const existingCartItem = cartItems.find(
+      (item: ICartProduct) => item._id === product._id
+    );
 
     if (existingCartItem) {
       dispatch(
