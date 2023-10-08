@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import {
@@ -17,9 +17,12 @@ import { addToCart } from '../redux/slices/cartSlice';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const ProductScreen: React.FC = () => {
   const { id: productId } = useParams();
+  const cartItems = useSelector(state => state.cart.cartItems);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [qty, setQty] = useState(1);
@@ -31,7 +34,19 @@ const ProductScreen: React.FC = () => {
   } = useGetProductDetailsQuery(productId);
 
   const addToCartHandler = () => {
-    dispatch(addToCart({ ...product, qty }));
+    const existingCartItem = cartItems.find(item => item._id === product._id);
+
+    if (existingCartItem) {
+      dispatch(
+        addToCart({
+          ...existingCartItem,
+          qty: existingCartItem.qty + qty,
+        })
+      );
+    } else {
+      dispatch(addToCart({ ...product, qty }));
+    }
+
     navigate('/cart');
   };
 

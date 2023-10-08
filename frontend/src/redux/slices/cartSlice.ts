@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface ICartItem {
   _id: string;
@@ -9,9 +9,9 @@ interface ICartItem {
 
 interface ICartState {
   cartItems: ICartItem[];
-  itemsPrice: number;
-  shippingPrice: number;
-  totalPrice: string; // Add totalPrice property
+  itemsPrice: string; // Added itemsPrice property with string type
+  shippingPrice: string; // Added shippingPrice property with string type
+  totalPrice: string; // Added totalPrice property with string type
 }
 
 const addDecimals = (num: number) => {
@@ -21,13 +21,18 @@ const addDecimals = (num: number) => {
 const cartFromLocalStorage = localStorage.getItem('cart');
 const initialState: ICartState = cartFromLocalStorage
   ? JSON.parse(cartFromLocalStorage)
-  : { cartItems: [], itemsPrice: 0, shippingPrice: 0, totalPrice: '0.00' }; // Initialize totalPrice as a string
+  : {
+      cartItems: [],
+      itemsPrice: '0.00',
+      shippingPrice: '0.00',
+      totalPrice: '0.00',
+    };
 
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addToCart: (state, action) => {
+    addToCart: (state, action: PayloadAction<ICartItem>) => {
       const item = action.payload;
 
       const existItem = state.cartItems.find(x => x._id === item._id);
@@ -41,18 +46,21 @@ const cartSlice = createSlice({
       }
 
       // Recalculate itemsPrice
-      state.itemsPrice = state.cartItems.reduce(
+      const itemsPrice = state.cartItems.reduce(
         (acc, item) => acc + item.price * item.qty,
         0
       );
+      state.itemsPrice = addDecimals(itemsPrice);
 
       // ShippingPrice
-      state.shippingPrice = state.itemsPrice > 100 ? 0 : 10;
+      const shippingPrice = itemsPrice > 100 ? 0 : 10;
+      state.shippingPrice = addDecimals(shippingPrice);
 
-      // Calculate totalPrice
-      state.totalPrice = addDecimals(state.itemsPrice + state.shippingPrice);
+      // Calculate the total price
+      const totalPrice = itemsPrice + shippingPrice;
+      state.totalPrice = addDecimals(totalPrice);
 
-      // Update localStorage
+      // Save the cart to localStorage
       localStorage.setItem('cart', JSON.stringify(state));
     },
   },
