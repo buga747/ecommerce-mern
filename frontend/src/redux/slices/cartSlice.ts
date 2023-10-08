@@ -10,9 +10,6 @@ const initialState: ICartState = cartFromLocalStorage
   ? JSON.parse(cartFromLocalStorage)
   : {
       cartItems: [],
-      itemsPrice: '0.00',
-      shippingPrice: '0.00',
-      totalPrice: '0.00',
     };
 
 const cartSlice = createSlice({
