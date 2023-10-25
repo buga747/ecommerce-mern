@@ -1,10 +1,10 @@
 import jwt from 'jsonwebtoken';
-import asyncHandler from './asyncHandler';
-import User from '../models/userModel';
+import asyncHandler from './asyncHandler.js';
+import User from '../models/userModel.js';
 
 // Protect routes
 
-export const protext = asyncHandler(async (req, res, next) => {
+const protect = asyncHandler(async (req, res, next) => {
   let token;
 
   // Read the JWT from the cookie
@@ -36,4 +36,4 @@ const admin = (req, res, next) => {
   }
 };
 
-export { protext, admin };
+export { protect, admin };
