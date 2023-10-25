@@ -46,18 +46,24 @@ const CartScreen = () => {
           <ListGroup variant="flush">
             <ListGroup.Item>
               <Row style={{ textAlign: 'center' }}>
-                <Col md={2}></Col>
-                <Col md={3}>Item</Col>
-                <Col md={2}>Item Price</Col>
-                <Col md={2}>Total Price </Col>
-                <Col md={2}>Quantity</Col>
+                <Col md={3}></Col>
+                <Col md={2}>Item</Col>
+                <Col md={1}></Col>
+
+                <Col md={1}>Item Price</Col>
+                <Col md={1}></Col>
+
+                <Col md={1}>Total Price </Col>
+                <Col md={1}></Col>
+
+                <Col md={1}>Total items</Col>
               </Row>
             </ListGroup.Item>
 
             {cartItems.map((item: ICartProduct) => (
               <ListGroup.Item key={item._id}>
                 <Row>
-                  <Col md={2}>
+                  <Col md={3}>
                     <Image src={item.image} alt={item.name} fluid rounded />
                   </Col>
                   <Col md={3}>
@@ -66,7 +72,7 @@ const CartScreen = () => {
                   <Col md={2}>${item.price}</Col>
                   <Col md={2}>${(item.price * item.qty).toFixed(2)}</Col>
 
-                  <Col md={2}>
+                  <Col md={1}>
                     <Form.Control
                       as="select"
                       value={item.qty}
